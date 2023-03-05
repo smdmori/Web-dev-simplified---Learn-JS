@@ -1,3 +1,5 @@
+const audioContext = new AudioContext()
+
 const NOTE_DETAILS = [
 
   // Go to comment in playNotes() for more information
@@ -52,14 +54,27 @@ function playNotes() {
     // 2. this brings the readablitiy lower, so we define 'false' value in the object itself
     // keyElement.classList.toggle('active', n.active || false)
     keyElement.classList.toggle('active', n.active)
+
+    if (n.oscillator != null) {
+      n.oscillator.stop()
+      n.oscillator.disconnect()
+    }
   })
 
   const activeNotes = NOTE_DETAILS.filter(n => n.active)
+  const gain = 1 / activeNotes.length
   activeNotes.forEach(n => {
-    startNote(n)
+    startNote(n, gain)
   })
 }
 
-function startNote(ntoeDetail) {
-  oscillator.type = 'sawtooth'
+function startNote(noteDetail, gain) {
+  const gainNode = audioContext.createGain()
+  gainNode.gain.value = gain
+  const oscillator = audioContext.createOscillator()
+  oscillator.frequency.value = noteDetail.frequency
+  oscillator.type = 'sine'
+  oscillator.connect(gainNode).connect(audioContext.destination)
+  oscillator.start()
+  noteDetail.oscillator = oscillator
 }
