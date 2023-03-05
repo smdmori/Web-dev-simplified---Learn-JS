@@ -11,6 +11,21 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.keyboard-key {
+  position: absolute;
+  bottom: 0;
 }
 
 .piano {
@@ -20,10 +35,11 @@ body {
 .key {
   height: calc(var(--width)*4);
   width: var(--width);
+  position: relative;
 }
 
 .white {
-  --width: 100px;
+  --width: 10vw;
   background-color: #fff;
   border: 1px solid #333;
 }
@@ -33,11 +49,12 @@ body {
 }
 
 .black {
-  --width: 60px;
+  --width: 6vw;
   background-color: black;
   margin-left: calc(var(--width) / -2);
   margin-right: calc(var(--width) / -2);
   z-index: 2;
+  color: white
 }
 
 .black.active {
