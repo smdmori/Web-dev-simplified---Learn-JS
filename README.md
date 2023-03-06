@@ -1,5 +1,4 @@
 # Web-dev-simplified---Learn-JS
-https://smdmori.github.io/Web-dev-simplified---Learn-JS/
 
 
 Piano Project
