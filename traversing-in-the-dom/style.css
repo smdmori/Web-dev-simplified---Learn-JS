@@ -1,0 +1,13 @@
+body {
+  font-size: 2rem;
+}
+
+div {
+  color: black;
+}
+
+div>div {
+  border-left: 2px solid black;
+  margin-left: 15px;
+  padding-left: 10px;
+}

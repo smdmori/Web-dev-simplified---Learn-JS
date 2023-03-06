@@ -1,0 +1,8 @@
+body {
+  font-size: 2rem;
+}
+
+.list-item:hover {
+  color: red;
+  text-decoration: line-through;
+}
