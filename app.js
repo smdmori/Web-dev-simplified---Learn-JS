@@ -24,7 +24,6 @@ document.addEventListener('keydown', e=> {
   if (e.repeat) return
 
   const keyCode = e.code
-  console.log('keyCode',keyCode, typeof keyCode);
   const noteDetail = getNoteDetails(keyCode)
 
   if (noteDetail == null) return
@@ -44,14 +43,9 @@ document.addEventListener('keyup', e => {
 })
 
 document.addEventListener('touchstart', e=> {
-  console.log(e);
-  console.log(e.target.dataset);
 
   const keyCode = e.target.dataset.keyCode
-  console.log(keyCode);
   const noteDetail = getNoteDetails(keyCode)
-
-  console.log('touch me', noteDetail);
 
   if (noteDetail == null) return
 
@@ -70,13 +64,7 @@ document.addEventListener('touchend', e=> {
 })
 
 function getNoteDetails(keyPressed) {
-  console.log('kp', keyPressed);
   return NOTE_DETAILS.find(n => `Key${n.key}` === keyPressed)
-}
-
-function getNoteDetailsFromNote(notePressed) {
-  console.log('np',notePressed);
-  // return NOTE_DETAILS.find(n => `Key${n.key}` === notePressed)
 }
 
 function playNotes() {
