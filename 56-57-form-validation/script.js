@@ -4,14 +4,12 @@ import pushToArray from './_pushToArray.js'
 // TODO: Select all elements needed
 //    Use the HTML to figure out what classes/ids will work best for selecting each element
 const form = document.querySelector('#form')
-const username = document.querySelector('#username')
-const password = document.querySelector('#password')
-const passwordConfirm = document.querySelector('#password-confirmation')
-const terms = document.querySelector('#terms')
+const usernameInput = document.querySelector('#username')
+const passwordInput = document.querySelector('#password')
+const passwordConfirmInput = document.querySelector('#password-confirmation')
+const termsInput = document.querySelector('#terms')
 const errorsList = document.querySelector('.errors-list')
-const errors = document.querySelector('.errors')
-
-console.log('form:', form)
+const errorsContainer = document.querySelector('.errors')
 
 // TODO: Create an event listener for when the form is submitted and do the following inside of it.
 form.addEventListener('submit', e => {
@@ -20,51 +18,42 @@ form.addEventListener('submit', e => {
 
   //    TODO: Define the following validation checks with appropriate error messages
   //      1. Ensure the username is at least 6 characters long
-  const usernameValue = username.value
+  const usernameValue = usernameInput.value
   let error = checkArrayLength(usernameValue, 6, 'Username')
-  console.log('username error:', error)
 
   if (error) {
     pushToArray(error, errorMessages)
   }
 
   //      2. Ensure the password is at least 10 characters long
-  const passwordValue = password.value
+  const passwordValue = passwordInput.value
   const passError = checkArrayLength(passwordValue, 10, 'Password')
-  console.log('Password error:', passError)
 
   if (passError) {
     pushToArray(passError, errorMessages)
   }
 
   //      3. Ensure the password and confirmation password match
-  const passwordConfirmValue = passwordConfirm.value
+  const passwordConfirmValue = passwordConfirmInput.value
 
   if (passwordConfirmValue !== passwordValue || passError) {
     error = 'Password should match.'
-    console.log('Password Confirm Error:', error)
     pushToArray(error, errorMessages)
   }
 
-  console.log('termsChecked:', terms.checked)
-
   //      4. Ensure the terms checkbox is checked
-  if (terms.checked !== true) {
+  if (termsInput.checked !== true) {
     error = 'Terms must be accepted.'
-    console.log('Terms check Error:', error)
     pushToArray(error, errorMessages)
   }
 
   //    TODO: If there are any errors then prevent the form from submitting and show the error messages
   if (errorMessages.length) {
-    console.log('errorMessages:', errorMessages)
     showErrors(errorMessages)
     e.preventDefault()
   } else {
     clearErrors()
   }
-
-  console.log('e:', e)
 })
 
 // TODO: Define this function
@@ -78,6 +67,7 @@ function clearErrors() {
     // errorsList.innerHTML = ''
     errorsList.firstChild.remove()
   }
+  errorsContainer.classList.remove('show')
 }
 
 // TODO: Define this function
@@ -89,9 +79,7 @@ function showErrors(errorMessages) {
     errorsList.innerHTML += `<li>${error}</li>`
   })
 
-  console.log('errorsList', errorsList)
-
   // Make sure to use an li as the element for each error
   // Also, make sure you add the show class to the errors container
-  errors.classList.add('show')
+  errorsContainer.classList.add('show')
 }
