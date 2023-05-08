@@ -9,6 +9,7 @@ const password = document.querySelector('#password')
 const passwordConfirm = document.querySelector('#password-confirmation')
 const terms = document.querySelector('#terms')
 const errorsList = document.querySelector('.errors-list')
+const errors = document.querySelector('.errors')
 
 console.log('form:', form)
 
@@ -39,7 +40,7 @@ form.addEventListener('submit', e => {
   //      3. Ensure the password and confirmation password match
   const passwordConfirmValue = passwordConfirm.value
 
-  if (passwordConfirmValue !== passwordValue || passError !== 'true') {
+  if (passwordConfirmValue !== passwordValue || passError) {
     error = 'Password should match.'
     console.log('Password Confirm Error:', error)
     pushToArray(error, errorMessages)
@@ -60,7 +61,6 @@ form.addEventListener('submit', e => {
     showErrors(errorMessages)
     e.preventDefault()
   } else {
-    e.preventDefault()
     clearErrors()
   }
 
@@ -74,23 +74,24 @@ function clearErrors() {
   // I recommend using a while loop to accomplish this task
   // This is the trickiest part of this exercise so if you get stuck and are unable to progress you can also set the innerHTML property of the error-list to an empty string and that will also clear the children. I recommend trying to accomplish this with a while loop, though, for practice.
   // Also, make sure you remove the show class to the errors container
-  console.log('errorList:', errorsList)
-  if (errorsList.childElementCount) {
-    console.log('cec', errorsList.childElementCount)
+  while (errorsList.childElementCount) {
+    // errorsList.innerHTML = ''
+    errorsList.firstChild.remove()
   }
-  // while (errorsList.children) {}
 }
 
 // TODO: Define this function
 function showErrors(errorMessages) {
   // Add each error to the error-list element
+  clearErrors()
+
   errorMessages.map(error => {
-    console.log('error', error)
-    errorsList.innerHTML = '1'
+    errorsList.innerHTML += `<li>${error}</li>`
   })
 
-  console.log('object')
+  console.log('errorsList', errorsList)
 
   // Make sure to use an li as the element for each error
   // Also, make sure you add the show class to the errors container
+  errors.classList.add('show')
 }

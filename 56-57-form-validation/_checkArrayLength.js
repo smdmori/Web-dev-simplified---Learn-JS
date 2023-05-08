@@ -8,5 +8,5 @@
 export default function checkArrayLength(array, length, itemString) {
   if (array.length < length) {
     return `${itemString} should be at least ${length} characters.`
-  } else return 'true'
+  }
 }
