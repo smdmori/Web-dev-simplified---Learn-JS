@@ -1,0 +1,44 @@
+:root {
+  --size: 2rem;
+}
+
+body {
+  font-size: var(--size);
+  font-family: sans-serif;
+}
+
+li {
+  list-style: none;
+  margin-block: 0.5em;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.input {
+  height: var(--size);
+}
+
+.add-todo {
+  font-size: var(--size);
+}
+
+.todo {
+  display: flex;
+  gap: 0.5em;
+}
+
+.todo:hover {
+  text-decoration: line-through;
+}
+
+.todo.done {
+  text-decoration: line-through;
+}
+
+.delete {
+  padding: 0.5em 1em;
+}
