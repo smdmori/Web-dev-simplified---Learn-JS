@@ -5,10 +5,6 @@ const form = document.querySelector('.form')
 
 const todos = []
 
-// create checkbox
-const checkbox = document.createElement('input')
-checkbox.setAttribute('type', 'checkbox')
-
 /**
  *
  * @param {string} text create a new todo containing this text
@@ -16,13 +12,14 @@ checkbox.setAttribute('type', 'checkbox')
 function createTodo(text) {
   const newTodo = {}
 
+  newTodo.id = Date.now()
   newTodo.text = text
   newTodo.checked = false
 
   todos.push(newTodo)
   console.log(todos)
 
-  showTodos(text)
+  showTodos()
 }
 
 // grab user input
@@ -38,23 +35,37 @@ form.addEventListener('submit', e => {
   inputTodo.value = ''
 })
 
+// checkbox handler
 document.addEventListener('click', e => {
-  console.log('e', e.target)
+  console.log('checkbox handler', e)
   if (e.target.matches('.delete')) {
   }
 
   if (e.target.matches('[type=checkbox]')) {
-    if (e.target.checked === true) {
-      console.log('true', e.target.checked)
-      e.target.parentElement.classList.add('done')
-      console.log('e.target', e.target.parentElement)
-      showTodos()
-    } else if (e.target.checked === false) {
-      console.log('false')
-      e.target.parentElement.classList.remove('done')
-      console.log('e.target', e.target.parentElement)
-      showTodos()
-    }
+    console.log('before', e.target.checked)
+    // if (e.target.checked === true) {
+
+    const find = todos.find(todo => e.target.parentElement.dataset['id'] === String(todo.id))
+
+    console.log('find', find)
+
+    find.checked = !find.checked
+    console.log('after', e.target.checked)
+
+    console.log('marches', todos)
+    showTodos()
+
+    // e.target.parentElement.classList.add('done')
+    console.log('e.target', e.target.parentElement)
+    // FIXME: here it is a bug
+    // it will not save todo.checked
+    // showTodos()
+    // } else if (e.target.checked === false) {
+    //   console.log('false')
+    //   e.target.parentElement.classList.remove('done')
+    //   console.log('e.target', e.target.parentElement)
+    //   showTodos()
+    // }
   }
 })
 
@@ -62,21 +73,36 @@ function showTodos() {
   todolist.innerHTML = ''
 
   todos.map(todo => {
-    const newTodo = document.createElement('li')
+    const newLi = document.createElement('li')
 
     // create delete button
     const deleteBtn = document.createElement('button')
     deleteBtn.textContent = 'Delete'
     deleteBtn.classList.add('delete')
 
-    newTodo.appendChild(checkbox)
-    newTodo.innerHTML += `${todo.text}`
-    newTodo.checked = todo.checked
+    // create checkbox
+    const checkbox = document.createElement('input')
+    checkbox.setAttribute('type', 'checkbox')
 
-    newTodo.appendChild(deleteBtn)
-    newTodo.classList.add('todo')
+    newLi.appendChild(checkbox)
+    newLi.innerHTML += `${todo.text}`
+    newLi.checked = todo.checked
+    if (newLi.checked === true) {
+      console.log('TT')
+      newLi.classList.add('done')
+    } else if (newLi.checked === false) {
+      console.log('FF')
+      newLi.classList.remove('done')
+    }
 
-    todolist.appendChild(newTodo)
+    newLi.appendChild(deleteBtn)
+    newLi.classList.add('todo')
+    newLi.dataset['id'] = todo.id
+    console.log('newLi.id', newLi.id)
+
+    todolist.appendChild(newLi)
+
+    console.log('todos', todos)
   })
 }
 
@@ -84,3 +110,6 @@ function deleteTodo() {
   // delete todo from todos
   // call show todos
 }
+
+// showTodos
+// todolist.map(todo => {})
