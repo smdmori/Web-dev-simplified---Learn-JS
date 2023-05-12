@@ -8,8 +8,9 @@ const todos = []
 /**
  *
  * @param {string} text create a new todo containing this text
+ * @param {Array} todos an array that contains list of all todos
  */
-function createTodo(text) {
+function createTodo(text, todos) {
   const newTodo = {}
 
   newTodo.id = Date.now()
@@ -17,46 +18,46 @@ function createTodo(text) {
   newTodo.checked = false
 
   todos.push(newTodo)
-  console.log(todos)
+  // console.log('create todo todos', todos)
 
-  showTodos()
+  showTodos(todos)
 }
 
 // grab user input
-inputTodo.addEventListener('input', grabUserInput)
-function grabUserInput(e) {
-  e.preventDefault()
-  console.log(e.target.value)
-}
+// inputTodo.addEventListener('input', grabUserInput)
+// function grabUserInput(e) {
+//   e.preventDefault()
+//   // console.log(e.target.value)
+// }
 
 form.addEventListener('submit', e => {
   e.preventDefault()
-  createTodo(inputTodo.value)
+  createTodo(inputTodo.value, todos)
   inputTodo.value = ''
 })
 
 // checkbox handler
 document.addEventListener('click', e => {
-  console.log('checkbox handler', e)
+  // console.log('checkbox handler', e)
   if (e.target.matches('.delete')) {
   }
 
   if (e.target.matches('[type=checkbox]')) {
-    console.log('before', e.target.checked)
+    // console.log('before', e.target.checked)
     // if (e.target.checked === true) {
 
     const find = todos.find(todo => e.target.parentElement.dataset['id'] === String(todo.id))
-
+    find.checked = !find.checked
     console.log('find', find)
 
-    find.checked = !find.checked
-    console.log('after', e.target.checked)
+    // console.log('after', e.target.checked)
 
-    console.log('marches', todos)
-    showTodos()
+    console.log('matches', todos)
+    showTodos(todos)
 
     // e.target.parentElement.classList.add('done')
-    console.log('e.target', e.target.parentElement)
+    console.log('e.target', e.target.parentElement.firstElementChild.checked)
+    e.target.parentElement.firstElementChild.checked = find.checked
     // FIXME: here it is a bug
     // it will not save todo.checked
     // showTodos()
@@ -69,10 +70,15 @@ document.addEventListener('click', e => {
   }
 })
 
-function showTodos() {
+/**
+ *
+ * @param {Array} todos list of all todos
+ */
+function showTodos(todos) {
   todolist.innerHTML = ''
 
   todos.map(todo => {
+    // create a new li element
     const newLi = document.createElement('li')
 
     // create delete button
@@ -83,6 +89,9 @@ function showTodos() {
     // create checkbox
     const checkbox = document.createElement('input')
     checkbox.setAttribute('type', 'checkbox')
+
+    console.log('checked', todo.checked)
+    // checkbox.setAttribute('checked', todo.checked)
 
     newLi.appendChild(checkbox)
     newLi.innerHTML += `${todo.text}`
@@ -103,6 +112,7 @@ function showTodos() {
     todolist.appendChild(newLi)
 
     console.log('todos', todos)
+    console.log('what', todo)
   })
 }
 
